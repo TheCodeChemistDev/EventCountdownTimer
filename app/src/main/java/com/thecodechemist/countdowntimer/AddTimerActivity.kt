@@ -20,16 +20,15 @@ class AddTimerActivity : AppCompatActivity() {
     }
 
     fun validateEvent(): Boolean {
-        val eventName = findViewById<EditText>(R.id.etEventName).text
-        val eventDate = findViewById<EditText>(R.id.etEventDate).text
-        val eventTime = findViewById<EditText>(R.id.etEventTime).text
-        val sb = StringBuilder()
-        sb.append(eventName).append(" ").append(eventDate).append(" ").append(eventTime)
-        val eventString = sb.toString()
-        Toast.makeText(this, eventString, Toast.LENGTH_SHORT).show()
-        var dataValid = false
+        val eventName = findViewById<EditText>(R.id.etEventName).text.toString()
+        val eventDate = findViewById<EditText>(R.id.etEventDate).text.toString()
+        val eventTime = findViewById<EditText>(R.id.etEventTime).text.toString()
 
-        return dataValid
+        val validator = TimerValidator()
+        var dataIsValid: Boolean = validator.validateData(eventName, eventDate, eventTime)
+
+        Toast.makeText(this, dataIsValid.toString(), Toast.LENGTH_SHORT).show()
+        return dataIsValid
     }
 
     val clickListener = View.OnClickListener { view ->
