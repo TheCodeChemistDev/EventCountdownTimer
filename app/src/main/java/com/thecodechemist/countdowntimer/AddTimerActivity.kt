@@ -25,7 +25,7 @@ class AddTimerActivity : AppCompatActivity() {
         val eventTime = findViewById<EditText>(R.id.etEventTime).text.toString()
 
         val validator = TimerValidator()
-        var dataIsValid: Boolean = validator.validateData(this, eventName, eventDate, eventTime)
+        val dataIsValid: Boolean = validator.validateData(this, eventName, eventDate, eventTime)
 
         Toast.makeText(this, dataIsValid.toString(), Toast.LENGTH_SHORT).show()
         return dataIsValid
