@@ -1,21 +1,9 @@
 package com.thecodechemist.countdowntimer
 
-class Timer(name: String, date: String, time: String) {
+import android.util.Log
 
-    val eventName = name
-    val eventDate = date
-    val eventTime = time
+class Timer(val name: String, val date: String, val time: String) {
 
-    fun getName(): String {
-        return eventName
-    }
 
-    fun getDate(): String {
-        return eventDate
-    }
-
-    fun getTime(): String {
-        return eventTime
-    }
 }
 
