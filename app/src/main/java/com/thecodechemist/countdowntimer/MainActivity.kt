@@ -9,6 +9,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,11 +23,11 @@ class MainActivity : AppCompatActivity() {
     val clickListener = View.OnClickListener { view ->
 
         when(view.getId()) {
-            R.id.fabAddTimer -> addTimer()
+            R.id.fabAddTimer -> goToAddTimer()
         }
     }
 
-    fun addTimer() {
+    fun goToAddTimer() {
         val intent = Intent(this, AddTimerActivity::class.java)
         startActivity(intent)
     }

@@ -32,12 +32,10 @@ class AddTimerActivity : AppCompatActivity() {
         val eventTime = etEventTime.text.toString()
         val validator = TimerValidator()
         val dataIsValid: Boolean = validator.validateData(this, eventName, eventDate, eventTime)
-
-        Toast.makeText(this, dataIsValid.toString(), Toast.LENGTH_SHORT).show()
         return dataIsValid
     }
 
-    fun addTimer() {
+    fun createTimer() {
         val eventName = etEventName.text.toString()
         val eventDate = etEventDate.text.toString()
         val eventTime = etEventTime.text.toString()
@@ -52,7 +50,7 @@ class AddTimerActivity : AppCompatActivity() {
     val clickListener = View.OnClickListener { view ->
 
         when(view.getId()) {
-            R.id.btnSaveTimer -> if(validateEvent()) { addTimer() }
+            R.id.btnSaveTimer -> if(validateEvent()) { createTimer() }
         }
     }
 }
