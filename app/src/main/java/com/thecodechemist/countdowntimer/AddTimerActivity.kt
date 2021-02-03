@@ -1,5 +1,6 @@
 package com.thecodechemist.countdowntimer
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -45,6 +46,9 @@ class AddTimerActivity : AppCompatActivity() {
         Log.e("Name", timer.name)
         Log.e("Date", timer.date)
         Log.e("Time", timer.time)
+
+        val intent = Intent()
+
     }
 
     val clickListener = View.OnClickListener { view ->

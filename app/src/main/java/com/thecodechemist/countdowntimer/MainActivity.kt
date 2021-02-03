@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     fun goToAddTimer() {
         val intent = Intent(this, AddTimerActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, 1);
     }
     
 }
