@@ -33,6 +33,8 @@ class TimerValidator {
 
     fun validateEventDate(context: Context, eventDate: String): Boolean {
 
+        //TODO: Attach error messages to the appropriate EditText fields using EditText.error
+
         //Check an event date has been entered and is of expected length
         if(eventDate.equals("") || eventDate.length != 10) {
             Toast.makeText(context,  "Please use the correct date format", Toast.LENGTH_SHORT).show()
