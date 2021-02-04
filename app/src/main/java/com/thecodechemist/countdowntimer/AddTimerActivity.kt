@@ -39,16 +39,19 @@ class AddTimerActivity : AppCompatActivity() {
     fun createTimer() {
         val eventName = etEventName.text.toString()
         val eventDate = etEventDate.text.toString()
-        val eventTime = etEventTime.text.toString()
+        var eventTime = etEventTime.text.toString()
+        if(eventTime.equals("")) {
+            eventTime = "00.00"
+        }
 
         val timer = Timer(eventName, eventDate, eventTime)
+        //Timer is not null at this point but is when it is retrieved in MainActivity
+        Log.e("Timer", timer.toString())
 
-        Log.e("Name", timer.name)
-        Log.e("Date", timer.date)
-        Log.e("Time", timer.time)
-
-        val intent = Intent()
-
+        var intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("NewTimer", timer)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 
     val clickListener = View.OnClickListener { view ->
