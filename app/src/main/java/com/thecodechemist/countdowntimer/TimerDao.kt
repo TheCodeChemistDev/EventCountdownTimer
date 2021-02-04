@@ -12,7 +12,7 @@ interface TimerDao {
     fun getAll(): List<Timer>
 
     @Insert
-    fun insertAll(vararg timers: Timer)
+    fun addTimer(timer: Timer)
 
     @Delete
     fun delete(timer: Timer)
