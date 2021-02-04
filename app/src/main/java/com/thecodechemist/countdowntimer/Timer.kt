@@ -15,6 +15,8 @@ data class Timer(
         @ColumnInfo(name = "EventDate") val date: String,
         @ColumnInfo(name = "EventTime") val time: String) {
 
+        constructor(name: String, date: String, time: String) : this(0, name, date, time)
+
 
         override fun toString(): String {
                 val sb: StringBuilder = StringBuilder()
