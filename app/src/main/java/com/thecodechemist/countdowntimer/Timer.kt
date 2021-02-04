@@ -2,14 +2,18 @@ package com.thecodechemist.countdowntimer
 
 import android.os.Parcelable
 import android.util.Log
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import java.lang.StringBuilder
 
-@Parcelize
+@Entity
 data class Timer(
-        val name: String,
-        val date: String,
-        val time: String): Parcelable {
+        @PrimaryKey val uid: Int,
+        @ColumnInfo(name = "EventName") val name: String,
+        @ColumnInfo(name = "EventDate") val date: String,
+        @ColumnInfo(name = "EventTime") val time: String) {
 
 
         override fun toString(): String {
