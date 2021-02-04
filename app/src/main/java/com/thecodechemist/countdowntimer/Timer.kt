@@ -10,7 +10,7 @@ import java.lang.StringBuilder
 
 @Entity
 data class Timer(
-        @PrimaryKey(autoGenerate = true) val uid: Int,
+        @PrimaryKey(autoGenerate = true) var uid: Int,
         @ColumnInfo(name = "EventName") val name: String,
         @ColumnInfo(name = "EventDate") val date: String,
         @ColumnInfo(name = "EventTime") val time: String) {
