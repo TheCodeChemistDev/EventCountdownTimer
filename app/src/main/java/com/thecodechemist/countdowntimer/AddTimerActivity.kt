@@ -1,6 +1,7 @@
 package com.thecodechemist.countdowntimer
 
 import android.content.Intent
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -45,13 +46,26 @@ class AddTimerActivity : AppCompatActivity() {
         }
 
         val timer = Timer(eventName, eventDate, eventTime)
-        //Timer is not null at this point but is when it is retrieved in MainActivity
-        Log.e("Timer", timer.toString())
-
-        var intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("NewTimer", timer)
-        setResult(RESULT_OK, intent)
+        saveTimer(timer)
         finish()
+    }
+
+    private fun saveTimer(timer: Timer) {
+        class SaveTimer : AsyncTask<Void, Void, Void>() {
+
+            override fun doInBackground(vararg params: Void?): Void? {
+                AppDatabase(applicationContext!!).getTimerDao().addTimer(timer)
+                return null
+            }
+
+            override fun onPostExecute(result: Void?) {
+                super.onPostExecute(result)
+
+                Toast.makeText(applicationContext!!, "Note Saved!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        SaveTimer().execute()
     }
 
     val clickListener = View.OnClickListener { view ->
@@ -60,4 +74,5 @@ class AddTimerActivity : AppCompatActivity() {
             R.id.btnSaveTimer -> if(validateEvent()) { createTimer() }
         }
     }
+
 }
