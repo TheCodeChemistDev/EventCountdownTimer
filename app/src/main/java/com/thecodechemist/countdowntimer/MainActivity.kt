@@ -8,18 +8,40 @@ import android.view.View
 import android.widget.Toast
 import androidx.room.Room
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoroutineScope {
 
-    var timerList = ArrayList<Timer>()
+    //For Coroutine
+    private lateinit var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val fabAddTimer = findViewById<FloatingActionButton>(R.id.fabAddTimer)
+        //Get the list of existing timers from the database
+        job = Job()
+        launch {
+            this@MainActivity.let {
+                val timers = AppDatabase(it).getTimerDao().getAll()
 
+            }
+        }
+
+        val fabAddTimer = findViewById<FloatingActionButton>(R.id.fabAddTimer)
         fabAddTimer.setOnClickListener(clickListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 
 
@@ -31,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goToAddTimer() {
+        //Redirect to the Add Timer Activity
         val intent = Intent(this, AddTimerActivity::class.java)
         startActivity(intent)
     }
