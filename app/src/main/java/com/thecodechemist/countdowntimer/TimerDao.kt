@@ -9,13 +9,13 @@ import androidx.room.Query
 interface TimerDao {
 
     @Query("SELECT * FROM Timer")
-    fun getAll(): List<Timer>
+    suspend fun getAll(): List<Timer>
 
     @Insert
-    fun addTimer(timer: Timer)
+    suspend fun addTimer(timer: Timer)
 
     @Delete
-    fun delete(timer: Timer)
+    suspend fun delete(timer: Timer)
 
 
 }
