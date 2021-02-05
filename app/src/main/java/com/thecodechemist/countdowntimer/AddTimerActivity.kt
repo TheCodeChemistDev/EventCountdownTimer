@@ -9,23 +9,38 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class AddTimerActivity : AppCompatActivity() {
+class AddTimerActivity : AppCompatActivity(), CoroutineScope {
 
+    private lateinit var job: Job
     lateinit var etEventName: EditText
     lateinit var etEventDate: EditText
     lateinit var etEventTime: EditText
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_timer)
 
+        job = Job()
         etEventName = findViewById(R.id.etEventName)
         etEventDate = findViewById(R.id.etEventDate)
         etEventTime = findViewById(R.id.etEventTime)
         val btnSaveTimer = findViewById<Button>(R.id.btnSaveTimer)
         btnSaveTimer.setOnClickListener(clickListener)
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 
     fun validateEvent(): Boolean {
@@ -45,28 +60,17 @@ class AddTimerActivity : AppCompatActivity() {
             eventTime = "00.00"
         }
 
-        val timer = Timer(eventName, eventDate, eventTime)
-        saveTimer(timer)
-        finish()
-    }
-
-    private fun saveTimer(timer: Timer) {
-        class SaveTimer : AsyncTask<Void, Void, Void>() {
-
-            override fun doInBackground(vararg params: Void?): Void? {
-                AppDatabase(applicationContext!!).getTimerDao().addTimer(timer)
-                return null
+        launch {
+            val timer = Timer(eventName, eventDate, eventTime)
+            this@AddTimerActivity.let {
+                AppDatabase(it).getTimerDao().addTimer(timer)
+                Toast.makeText(this@AddTimerActivity, "Timer Saved!", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onPostExecute(result: Void?) {
-                super.onPostExecute(result)
-
-                Toast.makeText(applicationContext!!, "Note Saved!", Toast.LENGTH_SHORT).show()
-            }
         }
-
-        SaveTimer().execute()
     }
+
+
 
     val clickListener = View.OnClickListener { view ->
 
