@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
@@ -26,12 +28,18 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val rv: RecyclerView = findViewById(R.id.rvTimers)
+        rv.setHasFixedSize(true)
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        rv.layoutManager = layoutManager
+
         //Get the list of existing timers from the database
         job = Job()
         launch {
             this@MainActivity.let {
                 val timers = AppDatabase(it).getTimerDao().getAll()
-
+                rv.adapter = TimerAdapter(timers)
             }
         }
 
