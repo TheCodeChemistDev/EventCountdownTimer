@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20px"
+    >
+
+    <TextView
+        android:id="@+id/tvEventDetails"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="My Birthday - 25/03/2021 @ 00:00"/>
+
+    <TextView
+        android:id="@+id/tvTimeRemaining"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/tvEventDetails"
+        android:text="30 Days, 12 Hours, 35 Minutes and 25 Seconds to go..."/>
+
+</RelativeLayout>
