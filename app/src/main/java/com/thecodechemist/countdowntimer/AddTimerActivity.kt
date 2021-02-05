@@ -65,6 +65,10 @@ class AddTimerActivity : AppCompatActivity(), CoroutineScope {
             this@AddTimerActivity.let {
                 AppDatabase(it).getTimerDao().addTimer(timer)
                 Toast.makeText(this@AddTimerActivity, "Timer Saved!", Toast.LENGTH_SHORT).show()
+                val i = Intent(this@AddTimerActivity, MainActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(i)
             }
 
         }
