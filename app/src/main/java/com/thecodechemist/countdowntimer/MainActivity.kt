@@ -3,6 +3,7 @@ package com.thecodechemist.countdowntimer
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -64,6 +65,11 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         //Redirect to the Add Timer Activity
         val intent = Intent(this, AddTimerActivity::class.java)
         startActivity(intent)
+    }
+
+    fun updateTimers(timer: Timer) {
+
+
     }
     
 }
