@@ -1,11 +1,8 @@
 package com.thecodechemist.countdowntimer
 
-import android.os.Parcelable
-import android.util.Log
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
 import java.lang.StringBuilder
 
 @Entity
@@ -19,7 +16,7 @@ data class Timer(
 
 
         override fun toString(): String {
-                val sb: StringBuilder = StringBuilder()
+                val sb = StringBuilder()
                 sb.append("Event Name: ")
                 sb.append(name)
                 sb.append(" | Event Date: ")

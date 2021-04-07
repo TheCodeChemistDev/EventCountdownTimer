@@ -1,10 +1,7 @@
 package com.thecodechemist.countdowntimer
 
 import android.content.Context
-import android.icu.number.IntegerWidth
-import android.util.Log
 import android.widget.Toast
-import java.time.LocalDate
 
 class TimerValidator {
 
@@ -21,48 +18,48 @@ class TimerValidator {
         return dataIsValid
     }
 
-    fun validateEventName(context: Context, eventName: String): Boolean {
+    private fun validateEventName(context: Context, eventName: String): Boolean {
 
         //Check if an event name has been entered
-        if(eventName.equals("")) {
+        if(eventName == "") {
             Toast.makeText(context,  "Event name cannot be blank!", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
     }
 
-    fun validateEventDate(context: Context, eventDate: String): Boolean {
+    private fun validateEventDate(context: Context, eventDate: String): Boolean {
 
         //TODO: Attach error messages to the appropriate EditText fields using EditText.error
 
         //Check an event date has been entered and is of expected length
-        if(eventDate.equals("") || eventDate.length != 10) {
+        if(eventDate == "" || eventDate.length != 10) {
             Toast.makeText(context,  "Please use the correct date format", Toast.LENGTH_SHORT).show()
             return false
         } else {
             //Check the entered date is valid...
             //Check slashes are in correct place
-            if(!eventDate.substring(2, 3).equals("/") || !eventDate.substring(5, 6).equals("/")) {
+            if(eventDate.substring(2, 3) != "/" || eventDate.substring(5, 6) != "/") {
                 Toast.makeText(context,  "Please use the correct date format", Toast.LENGTH_SHORT).show()
                 return false
             } else {
                 //Check the day/month/year are within expected bounds
                 //Check the year
-                var enteredYear = eventDate.substring(6, 10)
-                var enteredYearInt = Integer.parseInt(enteredYear)
+                val enteredYear = eventDate.substring(6, 10)
+                val enteredYearInt = Integer.parseInt(enteredYear)
                 if(enteredYearInt < 1900 || enteredYearInt > 2100) {
                     Toast.makeText(context,  "Year out of bounds", Toast.LENGTH_SHORT).show()
                     return false
                 }
 
                 //Check the month
-                var enteredMonth = eventDate.substring(3, 5)
-                var enteredMonthInt = Integer.parseInt(enteredMonth)
+                val enteredMonth = eventDate.substring(3, 5)
+                val enteredMonthInt = Integer.parseInt(enteredMonth)
                 if(enteredMonthInt < 1 || enteredMonthInt > 12) {
                     Toast.makeText(context,  "Month out of bounds", Toast.LENGTH_SHORT).show()
                     return false
                 } else {
-                    var maxDays: Int = 0
+                    var maxDays = 0
                     when(enteredMonthInt) {
                         1 -> maxDays = 31
                         2 -> maxDays = 28
@@ -80,8 +77,8 @@ class TimerValidator {
 
                     //Check the day
                     //Warning: Does not currently support leap years
-                    var enteredDay = eventDate.substring(0, 2)
-                    var enteredDayInt = Integer.parseInt(enteredDay)
+                    val enteredDay = eventDate.substring(0, 2)
+                    val enteredDayInt = Integer.parseInt(enteredDay)
                     if(enteredDayInt < 1 || enteredDayInt > maxDays) {
                         Toast.makeText(context,  "Day out of bounds", Toast.LENGTH_SHORT).show()
                         return false
@@ -92,30 +89,30 @@ class TimerValidator {
         return true
     }
 
-    fun validateEventTime(context: Context, eventTime: String): Boolean {
+    private fun validateEventTime(context: Context, eventTime: String): Boolean {
 
         //Check if a time has been entered
-        if(!eventTime.equals("")) {
+        if(eventTime != "") {
             //Check the input is the expected length
             if(eventTime.length != 5 || eventTime.substring(2,3) != ".") {
                 Toast.makeText(context,  "Please use the correct time format", Toast.LENGTH_SHORT).show()
                 return false
             } else {
                 //Check the Hours entered
-                var enteredHour = eventTime.substring(0,2)
-                var enteredHourInt = Integer.parseInt(enteredHour)
-                if(enteredHourInt < 0 || enteredHourInt > 23) {
+                val enteredHour = eventTime.substring(0,2)
+                val enteredHourInt = Integer.parseInt(enteredHour)
+                return if(enteredHourInt < 0 || enteredHourInt > 23) {
                     Toast.makeText(context,  "Hours out of bounds", Toast.LENGTH_SHORT).show()
-                    return false
+                    false
                 } else {
                     //Check the Minutes entered
-                    var enteredMinute = eventTime.substring(3,5)
-                    var enteredMinuteInt = Integer.parseInt(enteredMinute)
+                    val enteredMinute = eventTime.substring(3,5)
+                    val enteredMinuteInt = Integer.parseInt(enteredMinute)
                     if(enteredMinuteInt < 0 || enteredMinuteInt > 59) {
                         Toast.makeText(context,  "Minutes out of bounds", Toast.LENGTH_SHORT).show()
-                        return false
+                        false
                     } else {
-                        return true
+                        true
                     }
                 }
             }

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.thecodechemist.countdowntimer.Timer
 
-@Database(entities = arrayOf(Timer::class), version = 1)
+@Database(entities = [Timer::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getTimerDao(): TimerDao
@@ -29,6 +29,5 @@ abstract class AppDatabase : RoomDatabase() {
         ).build()
 
     }
-
 
 }

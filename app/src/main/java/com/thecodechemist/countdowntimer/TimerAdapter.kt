@@ -8,9 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.timer_layout.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
-import java.time.temporal.TemporalAmount
 import java.util.*
-import kotlin.concurrent.timer
+import kotlin.math.abs
 
 class TimerAdapter(private val timers: List<Timer>) : RecyclerView.Adapter<TimerAdapter.TimerViewHolder>() {
 
@@ -34,7 +33,7 @@ class TimerAdapter(private val timers: List<Timer>) : RecyclerView.Adapter<Timer
         holder.view.tvEventDetails.text = sb.toString()
 
         //Set the time remaining...
-        val sdf: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
+        val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault())
 
         //Event Time
         val day: String = timers[position].date.substring(0, 2)
@@ -42,7 +41,7 @@ class TimerAdapter(private val timers: List<Timer>) : RecyclerView.Adapter<Timer
         val year: String = timers[position].date.substring(6, 10)
         val hour: String = timers[position].time.substring(0, 2)
         val minute: String = timers[position].time.substring(3, 5)
-        val eventDateTime = sdf.parse(day + "/" + month + "/" + year + " " + hour + ":" + minute + ":00")
+        val eventDateTime = sdf.parse("$day/$month/$year $hour:$minute:00")
 
         //Current Time
         val now = LocalDateTime.now()
@@ -52,11 +51,11 @@ class TimerAdapter(private val timers: List<Timer>) : RecyclerView.Adapter<Timer
         val currentHour = now.hour
         val currentMinute = now.minute
         val currentSecond = now.second
-        val currentDateTime = sdf.parse(Integer.toString(currentDay) + "/" + currentMonth + "/" + currentYear + " " + currentHour + ":" + currentMinute + ":" + currentSecond)
+        val currentDateTime = sdf.parse("$currentDay/$currentMonth/$currentYear $currentHour:$currentMinute:$currentSecond")
 
         //Calculate the difference
-        var timeDiffInMillis = Math.abs(eventDateTime.time - currentDateTime.time)
-        var timeDiffInSecs = timeDiffInMillis / 1000
+        val timeDiffInMillis = abs(eventDateTime!!.time - currentDateTime!!.time)
+        val timeDiffInSecs = timeDiffInMillis / 1000
         val daysDiff = (timeDiffInMillis / 1000) / 86400
         val hoursDiff = ((timeDiffInMillis / 1000) % 86400) / 3600
         val minutesDiff = (((timeDiffInMillis / 1000) % 86400) % 3600) / 60

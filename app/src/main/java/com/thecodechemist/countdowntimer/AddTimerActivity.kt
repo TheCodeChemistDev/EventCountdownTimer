@@ -17,9 +17,9 @@ import kotlin.coroutines.CoroutineContext
 class AddTimerActivity : AppCompatActivity(), CoroutineScope {
 
     private lateinit var job: Job
-    lateinit var etEventName: EditText
-    lateinit var etEventDate: EditText
-    lateinit var etEventTime: EditText
+    private lateinit var etEventName: EditText
+    private lateinit var etEventDate: EditText
+    private lateinit var etEventTime: EditText
 
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
@@ -42,20 +42,19 @@ class AddTimerActivity : AppCompatActivity(), CoroutineScope {
         job.cancel()
     }
 
-    fun validateEvent(): Boolean {
+    private fun validateEvent(): Boolean {
         val eventName = etEventName.text.toString()
         val eventDate = etEventDate.text.toString()
         val eventTime = etEventTime.text.toString()
         val validator = TimerValidator()
-        val dataIsValid: Boolean = validator.validateData(this, eventName, eventDate, eventTime)
-        return dataIsValid
+        return validator.validateData(this, eventName, eventDate, eventTime)
     }
 
-    fun createTimer() {
+    private fun createTimer() {
         val eventName = etEventName.text.toString()
         val eventDate = etEventDate.text.toString()
         var eventTime = etEventTime.text.toString()
-        if(eventTime.equals("")) {
+        if(eventTime == "") {
             eventTime = "00.00"
         }
 
@@ -75,9 +74,9 @@ class AddTimerActivity : AppCompatActivity(), CoroutineScope {
 
 
 
-    val clickListener = View.OnClickListener { view ->
+    private val clickListener = View.OnClickListener { view ->
 
-        when(view.getId()) {
+        when(view.id) {
             R.id.btnSaveTimer -> if(validateEvent()) { createTimer() }
         }
     }
