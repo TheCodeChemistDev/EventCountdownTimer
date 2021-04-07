@@ -1,16 +1,14 @@
 package com.thecodechemist.countdowntimer
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.thecodechemist.countdowntimer.db.AppDatabase
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,6 +19,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     //For Coroutine
     private lateinit var job: Job
+    private lateinit var timers: List<Timer>
+    private lateinit var hUiUpdate: Handler
+    private lateinit var rUiUpdate: Runnable
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
@@ -39,12 +40,19 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         job = Job()
         launch {
             this@MainActivity.let {
-                val timers = AppDatabase(it).getTimerDao().getAll()
+                timers = AppDatabase(it).getTimerDao().getAll()
                 rv.adapter = TimerAdapter(timers)
             }
         }
 
-        val fabAddTimer = findViewById<FloatingActionButton>(R.id.fabAddTimer)
+        //Setup for refreshing UI every 1 second
+        hUiUpdate = Handler()
+        rUiUpdate = Runnable {
+            rv.adapter?.notifyDataSetChanged()
+            hUiUpdate.postDelayed(rUiUpdate, 1000)
+        }
+        hUiUpdate.post(rUiUpdate)
+
         fabAddTimer.setOnClickListener(clickListener)
     }
 

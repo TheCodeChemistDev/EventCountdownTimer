@@ -1,9 +1,10 @@
-package com.thecodechemist.countdowntimer
+package com.thecodechemist.countdowntimer.db
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.thecodechemist.countdowntimer.Timer
 
 @Dao
 interface TimerDao {

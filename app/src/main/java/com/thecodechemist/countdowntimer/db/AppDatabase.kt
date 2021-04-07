@@ -1,9 +1,10 @@
-package com.thecodechemist.countdowntimer
+package com.thecodechemist.countdowntimer.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.thecodechemist.countdowntimer.Timer
 
 @Database(entities = arrayOf(Timer::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {
